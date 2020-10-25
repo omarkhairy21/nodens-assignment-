@@ -1,11 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
 // middleware
 // serve static sites
 app.use(express.static('public'));
+app.use(express.json());
 
 // view engine
 app.set('view engine', 'pug');
@@ -24,3 +26,4 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCr
 
 // routes
 app.get('/', (req, res) => res.render('home'));
+app.use(authRoutes);
