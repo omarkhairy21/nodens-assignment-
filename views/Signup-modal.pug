@@ -1,0 +1,25 @@
+
+.ui.modal
+  .header Create New Account
+  form(action="/signup").ui.medium.form.error.signUp_form
+    .ui.stacked.segment
+      .ui.error.message
+      .required.field
+        .ui.left.icon.input
+          i.user.icon
+          input(type="text", name="name" placeholder="Name")
+      .required.field
+        .ui.left.icon.input
+          i.envelope.icon
+          input(type="email", name="email" placeholder="E-mail")
+      .required.field
+        .ui.left.icon.input
+          i.lock.icon
+          input(type="password", name="password" placeholder="Password")
+      .required.field
+        .ui.left.icon.input
+          i.lock.icon
+          input(type="password", name="confirm-password" placeholder="Confirm Password")
+      .ui.grid
+        .right.floated.column
+          button(type="submit").ui.right.floated.large.green.button Submit    

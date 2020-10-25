@@ -17,3 +17,7 @@
   margin: 12.75rem;
   color: white;
 }
+
+.signup__btn__submit{
+  float: right;
+}
