@@ -19,8 +19,7 @@ app.set('views', 'views');
 const dbURI = 'mongodb+srv://khairy:hEXEJMisDGngU5jT@cluster0.dyyja.mongodb.net/nodens?retryWrites=true&w=majority';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
   .then((result) => {
-    console.log("App Connected Successfully")
-    app.listen(3002)
+    console.log("Database Connected Successfully")
   })
   .catch((err) => console.log(err));
 

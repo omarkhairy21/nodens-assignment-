@@ -23,7 +23,11 @@ exports.postSignupController = async (req, res, next) => {
     const maxAge = 14 * 24 * 60 * 60 * 1000 // two weeks
     res.cookie('jwt', token, { httpOnly: true, maxAge});
 
-    res.status(201).json({user: newUser._id})
+    res.status(201).json({
+      userId: newUser._id,
+      name: newUser.name,
+      email: newUser.email
+    })
 
   } catch(error){
     console.log(error)
