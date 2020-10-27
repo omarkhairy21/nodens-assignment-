@@ -19,10 +19,9 @@ app.set('view engine', 'pug');
 app.set('views', 'views');
 
 // database connection
-const dbURI =
-  'mongodb+srv://khairy:hEXEJMisDGngU5jT@cluster0.dyyja.mongodb.net/nodens?retryWrites=true&w=majority';
+
 mongoose
-  .connect(dbURI, {
+  .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,

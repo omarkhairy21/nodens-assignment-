@@ -1,8 +1,8 @@
 // selectors
 const signupBtn = document.querySelector('.signUp_btn');
-const signupForm = document.querySelector('.signUp_form');
+const signupForm = document.getElementById('signUp_form');
 const loginBtn = document.querySelector('.login_btn');
-const loginForm = document.querySelector('.signUp_form');
+const loginForm = document.getElementById('login_form');
 
 // init modal
 $('.ui.modal').modal();
@@ -17,12 +17,11 @@ loginBtn.addEventListener('click', () => {
 /**
  * @description Handle login form submit
  */
+console.log(loginForm);
 loginForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-
   const email = loginForm.email.value;
   const password = loginForm.password.value;
-
+  event.preventDefault();
   try {
     const response = await fetch('/login', {
       method: 'POST',
@@ -34,9 +33,10 @@ loginForm.addEventListener('submit', async (event) => {
     if (responseData.errors) {
       $(loginForm).form('add errors', [responseData.errors]);
     }
-    if (response.status === 201) {
+    if (response.status === 200) {
       $(loginForm).form('clear');
       $('.login_modal').modal('hide');
+      location.assign('/user/profile');
     }
   } catch (error) {
     console.log(error);
@@ -63,6 +63,7 @@ signupForm.addEventListener('submit', async (event) => {
     }
     if (response.status === 201) {
       $('.signUp_modal').modal('hide');
+      location.assign('/user/profile');
     }
   } catch (error) {
     console.log(error);

@@ -1,25 +1,25 @@
 
 .ui.modal.signUp_modal
-  .header Create New Account
-  form(action="/signup").ui.medium.form.error.signUp_form
+  .header.signup_modal_header Create New Account
+  form(action="/signup")#signUp_form.ui.medium.form.error
     .ui.stacked.segment
       .ui.error.message
       .required.field
         .ui.left.icon.input
           i.user.icon
-          input(type="text", name="name" placeholder="Name")
+          input(type="text", name="name" placeholder="Name").name_input
       .required.field
         .ui.left.icon.input
           i.envelope.icon
-          input(type="email", name="email" placeholder="E-mail")
+          input(type="email", name="email" placeholder="E-mail").email_input
       .required.field
         .ui.left.icon.input
           i.lock.icon
-          input(type="password", name="password" placeholder="Password")
+          input(type="password", name="password" placeholder="Password").pass_input
       .required.field
         .ui.left.icon.input
           i.lock.icon
-          input(type="password", name="confirm-password" placeholder="Confirm Password")
+          input(type="password", name="confirm-password" placeholder="Confirm Password").confirm_pass_input
       .ui.grid
         .right.floated.column
-          button(type="submit").ui.right.floated.large.green.button Submit    
+          button(type="submit").ui.right.floated.large.green.button.submit_signup Submit

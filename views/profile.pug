@@ -2,13 +2,14 @@ extends layout
 
 block content
   if user
-    .ui.text.container.header__content
+    .ui.text.container.profile__content
       h1.ui.header.header__h1 Hello, #{user.name}
       h2 Share and engage with community
-      img(src="/user.png", alt=user.name, srcset="").ui.image
+      img(src="/user.png", alt=user.name, srcset="").ui.centered.medium.image
       .content #{user.name}
       .sub.header #{user.email}
       .ui.divider
-      .ui.huge.danger.button Logout
+      form(action="/logout", method="get")
+        button(type="submit").ui.huge.danger.button Logout
   else 
     h1 not Authorized    

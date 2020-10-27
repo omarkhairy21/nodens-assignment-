@@ -48,17 +48,22 @@ exports.postLoginController = async (req, res) => {
 
   try {
     const user = await User.login(email, password);
-
+    console.log(user);
     const token = createJWtToken(user._id);
 
     res.cookie('jwt', token, { httpOnly: true, maxAge });
 
     res.status(200).json({
-      userId: newUser._id,
-      name: newUser.name,
-      email: newUser.email,
+      userId: user._id,
+      name: user.name,
+      email: user.email,
     });
   } catch (error) {
     console.log(error);
   }
+};
+
+exports.getLogoutController = (req, res) => {
+  res.cookie('jwt', '', { maxAge: 1 });
+  res.redirect('/');
 };
