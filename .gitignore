@@ -1,6 +1,4 @@
-# development 
-/.vscode
-
 # Dependency directories
 /node_modules
 
+.vscode/settings.json

@@ -1,13 +1,9 @@
 
-.ui.modal.signUp_modal
-  .header Create New Account
-  form(action="/signup").ui.medium.form.error.signUp_form
+.ui.modal.login_modal
+  .header Login To Your Account
+  form(action="/login").ui.medium.form.error.login_form
     .ui.stacked.segment
       .ui.error.message
-      .required.field
-        .ui.left.icon.input
-          i.user.icon
-          input(type="text", name="name" placeholder="Name")
       .required.field
         .ui.left.icon.input
           i.envelope.icon
@@ -16,10 +12,6 @@
         .ui.left.icon.input
           i.lock.icon
           input(type="password", name="password" placeholder="Password")
-      .required.field
-        .ui.left.icon.input
-          i.lock.icon
-          input(type="password", name="confirm-password" placeholder="Confirm Password")
       .ui.grid
         .right.floated.column
           button(type="submit").ui.right.floated.large.green.button Submit    
