@@ -4,6 +4,9 @@ const signupForm = document.getElementById('signUp_form');
 const loginBtn = document.querySelector('.login_btn');
 const loginForm = document.getElementById('login_form');
 
+// Read the CSRF token from the <meta> tag
+var token = document.querySelector('input[name="_csrf"]').getAttribute('value');
+
 // init modal
 $('.ui.modal').modal();
 
@@ -25,7 +28,8 @@ loginForm.addEventListener('submit', async (event) => {
     const response = await fetch('/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
-      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json', 'CSRF-Token': token },
     });
     const responseData = await response.json();
 
@@ -53,7 +57,8 @@ signupForm.addEventListener('submit', async (event) => {
     const response = await fetch('/signup', {
       method: 'POST',
       body: JSON.stringify({ email, password, name }),
-      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json', 'CSRF-Token': token },
     });
     const responseData = await response.json();
 

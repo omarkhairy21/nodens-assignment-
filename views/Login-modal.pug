@@ -2,6 +2,8 @@
 .ui.modal.login_modal
   .header Login To Your Account
   form(action="/login/")#login_form.ui.medium.form.error
+    - var csrf_Token = csrfToken
+    input(type="hidden", name="_csrf", value=csrf_Token) 
     .ui.stacked.segment
       .ui.error.message#login_err_msg
       .required.field

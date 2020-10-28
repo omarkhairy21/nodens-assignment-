@@ -2,6 +2,8 @@
 .ui.modal.signUp_modal
   .header.signup_modal_header Create New Account
   form(action="/signup")#signUp_form.ui.medium.form.error
+    - var csrf_Token = csrfToken
+    input(type="hidden", name="_csrf", value=csrf_Token) 
     .ui.stacked.segment
       .ui.error.message
       .required.field

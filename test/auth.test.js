@@ -1,6 +1,9 @@
 const request = require('supertest');
 const app = require('../app.js');
 const User = require('../models/User');
+const Token = require('csrf');
+const token = new Token();
+const csrfToken = token.create('test');
 const { userOneId, userOne, setupDatabase } = require('./helper/db');
 
 beforeEach(setupDatabase);
@@ -8,6 +11,10 @@ beforeEach(setupDatabase);
 it('Should signup new user', async () => {
   const response = await request(app)
     .post('/signup')
+    .set('Cookie', '_csrf=test')
+    .set({
+      'CSRF-Token': csrfToken,
+    })
     .send({
       name: 'omar',
       email: 'omar@example.com',
@@ -29,6 +36,10 @@ it('Should signup new user', async () => {
 it('should not signup the user with same email', async () => {
   const response = await request(app)
     .post('/signup')
+    .set('Cookie', '_csrf=test')
+    .set({
+      'CSRF-Token': csrfToken,
+    })
     .send({
       email: userOne.email,
       name: userOne.name,
@@ -43,6 +54,10 @@ it('should not signup the user with same email', async () => {
 it('should login the user', async () => {
   const response = await request(app)
     .post('/login')
+    .set('Cookie', '_csrf=test')
+    .set({
+      'CSRF-Token': csrfToken,
+    })
     .send({
       email: userOne.email,
       password: userOne.password,
@@ -61,6 +76,10 @@ it('should login the user', async () => {
 it('Should not login nonexistent user', async () => {
   await request(app)
     .post('/login')
+    .set('Cookie', '_csrf=test')
+    .set({
+      'CSRF-Token': csrfToken,
+    })
     .send({
       email: 'noexistsUser@user.com',
       password: 'thisisnotmypass',
@@ -69,5 +88,12 @@ it('Should not login nonexistent user', async () => {
 });
 
 it('Should not get profile for unauthenticated user', async () => {
-  await request(app).get('/user/profile').send().expect(401);
+  await request(app)
+    .get('/user/profile')
+    .set('Cookie', '_csrf=test')
+    .set({
+      'CSRF-Token': csrfToken,
+    })
+    .send()
+    .expect(401);
 });

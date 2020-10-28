@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 /**
- * @deprecated hook helper function before store password hash and generate salt to it
+ * @desc hook helper function before store password hash and generate salt to it
  */
 
 UserSchema.pre('save', async function (next) {
