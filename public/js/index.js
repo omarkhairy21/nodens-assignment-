@@ -1,63 +1,45 @@
-const signupBtn = document.querySelector('.ui.green.button');
-const signupForm = document.querySelector('.signUp_form');
+// selectors
+const signupBtn = document.querySelector('.signUp_btn');
+const signupForm = document.getElementById('signUp_form');
+const loginBtn = document.querySelector('.login_btn');
+const loginForm = document.getElementById('login_form');
 
+// init modal
 $('.ui.modal').modal();
 
 signupBtn.addEventListener('click', () => {
-  $('.ui.modal').modal('show');
+  $('.signUp_modal').modal('show');
+});
+loginBtn.addEventListener('click', () => {
+  $('.login_modal').modal('show');
 });
 
 /**
- * Signup Form Validation
+ * @description Handle login form submit
  */
-$('.ui.form').form({
-  on: 'blur',
-  fields: {
-    email: {
-      identifier: 'email',
-      rules: [
-        {
-          type: 'empty',
-          prompt: 'Please enter your e-mail',
-        },
-        {
-          type: 'email',
-          prompt: 'Please enter a valid e-mail',
-        },
-      ],
-    },
-    name: {
-      identifier: 'name',
-      rules: [
-        {
-          type: 'empty',
-          prompt: 'Please enter your name',
-        },
-      ],
-    },
-    password: {
-      identifier: 'password',
-      rules: [
-        {
-          type: 'empty',
-          prompt: 'Please enter your password',
-        },
-        {
-          type: 'length[6]',
-          prompt: 'Your password must be at least 6 characters',
-        },
-      ],
-    },
-    confirmPassword: {
-      identifier: 'confirm-password',
-      rules: [
-        {
-          type: 'match[password]',
-          prompt: 'Passwords do not match',
-        },
-      ],
-    },
-  },
+loginForm.addEventListener('submit', async (event) => {
+  const email = loginForm.email.value;
+  const password = loginForm.password.value;
+  event.preventDefault();
+  try {
+    const response = await fetch('/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const responseData = await response.json();
+
+    if (responseData.errors) {
+      $(loginForm).form('add errors', [responseData.errors]);
+    }
+    if (response.status === 200) {
+      $(loginForm).form('clear');
+      $('.login_modal').modal('hide');
+      location.assign('/user/profile');
+    }
+  } catch (error) {
+    console.log(error);
+  }
 });
 /**
  * @description Handle signup form submit
@@ -74,12 +56,13 @@ signupForm.addEventListener('submit', async (event) => {
       headers: { 'Content-Type': 'application/json' },
     });
     const responseData = await response.json();
-    console.log(responseData);
+
     if (responseData.errors) {
-      $('.ui.form').form('add errors', [responseData.errors]);
+      $(signupForm).form('add errors', [responseData.errors]);
     }
     if (response.status === 201) {
-      $('.ui.modal').modal('hide');
+      $('.signUp_modal').modal('hide');
+      location.assign('/user/profile');
     }
   } catch (error) {
     console.log(error);

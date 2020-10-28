@@ -1,0 +1,17 @@
+
+.ui.modal.login_modal
+  .header Login To Your Account
+  form(action="/login/")#login_form.ui.medium.form.error
+    .ui.stacked.segment
+      .ui.error.message#login_err_msg
+      .required.field
+        .ui.left.icon.input
+          i.envelope.icon
+          input#login_email_input(type="email", name="email" placeholder="E-mail")
+      .required.field
+        .ui.left.icon.input
+          i.lock.icon
+          input#login_pass_input(type="password", name="password" placeholder="Password")
+      .ui.grid
+        .right.floated.column
+          button(type="submit").ui.right.floated.large.green.button.submit_login Submit    

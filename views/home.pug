@@ -1,17 +1,18 @@
 extends layout
 
 block content
-  .main__header
-    .ui.vertical.center.aligned.segment.header__container
-      .ui.text.container.header__content
-        h1.ui.header.header__h1 Social Media Community
-        h2 Welcome to the community Connect, Share & Engage
-        p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
-        .ui.divider
-        .ui.huge.primary.button Login
-        .ui.huge.green.button Signup
+
+  .ui.text.container.header__content
+    h1.ui.header.header__h1 Social Media Community
+    h2 Welcome to the community Connect, Share & Engage
+    p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
+    .ui.divider
+    .ui.huge.primary.button.login_btn Login
+    .ui.huge.green.button.signUp_btn Signup
 
   include Signup-modal
+  include Login-modal
 block scripts
   script(src="/js/helper.js")
   script(src="/js/index.js")
+  script(src="/js/form-validation.js")
