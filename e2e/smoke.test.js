@@ -22,6 +22,12 @@ describe('Landing page loads', () => {
     expect(loginBtn).toEqual('Login');
     expect(signupBtn).toEqual('Signup');
   });
+  it('should found crsf as cookie', async () => {
+    // get cookies
+    const [crsfCookie] = await page.cookies();
+    expect(crsfCookie.name).toEqual('_csrf');
+    expect(crsfCookie.value).not.toBeNull();
+  });
 });
 
 describe('Signup', () => {
@@ -99,9 +105,9 @@ describe('logout', () => {
     const homePageUrl = await page.url();
     // assert redirect to home page
     expect(homePageUrl).toMatch('http://localhost:3002');
-    // get cookies
+
+    // expect jwt removed form cookies
     const cookies = await page.cookies();
-    // assert cookies must be empty array after logout
-    expect(cookies).toEqual([]);
+    expect(cookies).not.toContain(cookies[0].name === 'jwt');
   });
 });
