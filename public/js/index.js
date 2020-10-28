@@ -17,7 +17,6 @@ loginBtn.addEventListener('click', () => {
 /**
  * @description Handle login form submit
  */
-console.log(loginForm);
 loginForm.addEventListener('submit', async (event) => {
   const email = loginForm.email.value;
   const password = loginForm.password.value;
@@ -29,7 +28,7 @@ loginForm.addEventListener('submit', async (event) => {
       headers: { 'Content-Type': 'application/json' },
     });
     const responseData = await response.json();
-    console.log(responseData);
+
     if (responseData.errors) {
       $(loginForm).form('add errors', [responseData.errors]);
     }
@@ -57,7 +56,7 @@ signupForm.addEventListener('submit', async (event) => {
       headers: { 'Content-Type': 'application/json' },
     });
     const responseData = await response.json();
-    console.log(responseData);
+
     if (responseData.errors) {
       $(signupForm).form('add errors', [responseData.errors]);
     }

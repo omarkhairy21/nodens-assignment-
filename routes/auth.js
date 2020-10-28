@@ -11,8 +11,12 @@ const {
 
 const router = new Router();
 
-router.post('/signup', validatePostAuthSignupController, postSignupController);
-router.post('/login', validatePostAuthLoginController, postLoginController);
+router.post(
+  '/signup',
+  validatePostAuthSignupController(),
+  postSignupController
+);
+router.post('/login', validatePostAuthLoginController(), postLoginController);
 router.get('/logout', getLogoutController);
 
 module.exports = router;

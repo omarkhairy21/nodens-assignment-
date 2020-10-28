@@ -34,8 +34,8 @@ $(signupForm).form({
           prompt: 'Please enter your password',
         },
         {
-          type: 'length[6]',
-          prompt: 'Your password must be at least 6 characters',
+          type: 'length[5]',
+          prompt: 'Your password must be at least 5 characters',
         },
       ],
     },

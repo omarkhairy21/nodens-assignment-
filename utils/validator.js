@@ -6,7 +6,10 @@ function validatePostAuthSignupController() {
       .isEmail()
       .withMessage('Please enter a valid email.')
       .normalizeEmail(),
-    body('password').trim().isLength({ min: 5 }),
+    body('password')
+      .trim()
+      .isLength({ min: 5 })
+      .withMessage('Password must be bigger than 5'),
     body('name').trim().not().isEmpty(),
   ];
 }

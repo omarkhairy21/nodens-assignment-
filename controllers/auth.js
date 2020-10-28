@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const { createJWtToken } = require('../utils/token');
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
 /**
@@ -15,10 +15,7 @@ exports.postSignupController = async (req, res, next) => {
   const errors = validationResult(req);
   // handle errors came form middleware validation
   if (!errors.isEmpty()) {
-    const error = new Error('Validation failed.');
-    error.statusCode = 422;
-    error.data = errors.array();
-    throw error;
+    return res.status(400).json({ errors: errors.array() });
   }
   try {
     // check first if the user already exist
@@ -53,7 +50,11 @@ exports.postSignupController = async (req, res, next) => {
 
 exports.postLoginController = async (req, res) => {
   const { email, password } = req.body;
-
+  const errors = validationResult(req);
+  // handle errors came form middleware validation
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   try {
     // find the user by email
     const user = await User.findOne({ email });
