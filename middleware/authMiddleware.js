@@ -6,17 +6,15 @@ const isAuthenticated = async (req, res, next) => {
     const token = req.cookies.jwt;
 
     const decoded = jwt.verify(token, 'nodens health secret');
-    console.log(decoded);
     const user = await User.findById(decoded.userId);
-    console.log(user);
     if (!user) {
-      throw new Error('Wrong');
+      throw new Error('You Should authenticate first');
     } else {
       res.locals.user = user;
       next();
     }
   } catch (error) {
-    console.log(error);
+    res.status(401).json({ error: 'Please authenticate.' });
     next();
   }
 };

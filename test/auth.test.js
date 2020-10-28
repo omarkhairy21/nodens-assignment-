@@ -40,7 +40,7 @@ it('should not signup the user with same email', async () => {
     errors: 'The user with this email already exists',
   });
 });
-it('should should login the user', async () => {
+it('should login the user', async () => {
   const response = await request(app)
     .post('/login')
     .send({
@@ -56,4 +56,18 @@ it('should should login the user', async () => {
     name: user.name,
     email: user.email,
   });
+});
+
+it('Should not login nonexistent user', async () => {
+  await request(app)
+    .post('/login')
+    .send({
+      email: 'noexistsUser@user.com',
+      password: 'thisisnotmypass',
+    })
+    .expect(400);
+});
+
+it('Should not get profile for unauthenticated user', async () => {
+  await request(app).get('/user/profile').send().expect(401);
 });

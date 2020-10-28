@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const { createJWtToken } = require('../utils/token');
+const bcrypt = require('bcrypt');
 
 /**
  * @description POST /signup to register new user
@@ -33,7 +34,6 @@ exports.postSignupController = async (req, res, next) => {
       email: newUser.email,
     });
   } catch (error) {
-    console.log(error);
     res.status(400).json({ error });
   }
 };
@@ -47,8 +47,16 @@ exports.postLoginController = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.login(email, password);
-    console.log(user);
+    // find the user by email
+    const user = await User.findOne({ email });
+    // throw error if is not exists
+    if (!user) throw new Error('Can Not find User with this email');
+    // compare the provided password with the password store in Database
+    const isPasswordMatched = await bcrypt.compare(password, user.password);
+    // throw error if the provided password incorrect
+    if (!isPasswordMatched)
+      throw new Error('Unable to Login, incorrect password');
+
     const token = createJWtToken(user._id);
 
     res.cookie('jwt', token, { httpOnly: true, maxAge });
@@ -59,7 +67,7 @@ exports.postLoginController = async (req, res) => {
       email: user.email,
     });
   } catch (error) {
-    console.log(error);
+    res.status(400).json({ errors: error.message });
   }
 };
 
