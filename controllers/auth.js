@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const { createJWtToken } = require('../utils/token');
+const { validationResult } = require('express-validator/check');
 const bcrypt = require('bcrypt');
 
 /**
@@ -11,7 +12,14 @@ const maxAge = 14 * 24 * 60 * 60 * 1000; // two weeks
 
 exports.postSignupController = async (req, res, next) => {
   const { email, name, password } = req.body;
-
+  const errors = validationResult(req);
+  // handle errors came form middleware validation
+  if (!errors.isEmpty()) {
+    const error = new Error('Validation failed.');
+    error.statusCode = 422;
+    error.data = errors.array();
+    throw error;
+  }
   try {
     // check first if the user already exist
     const findUser = await User.findOne({ email });
@@ -25,7 +33,7 @@ exports.postSignupController = async (req, res, next) => {
     const newUser = await User.create({ email, password, name });
 
     const token = createJWtToken(newUser._id);
-
+    // set cookies
     res.cookie('jwt', token, { httpOnly: true, maxAge });
 
     res.status(201).json({

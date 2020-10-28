@@ -10,6 +10,6 @@ block content
       .sub.header #{user.email}
       .ui.divider
       form(action="/logout", method="get")
-        button(type="submit").ui.huge.danger.button Logout
+        button#logout_btn(type="submit").ui.huge.danger.button Logout
   else 
     h1 not Authorized    

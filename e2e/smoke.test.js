@@ -58,6 +58,13 @@ describe('login', () => {
     const text = await page.$eval('.header__h1', (el) => el.innerHTML);
     // assert the name of the user render correctly in his profile page
     expect(text).toEqual('Hello, test66');
+
+    // get cookies
+    const [cookie] = await page.cookies();
+
+    // assert the jwt assigned correctly
+    expect(cookie.name).toEqual('jwt');
+    expect(cookie.value).not.toBeNull();
   });
 
   it('should not login with invalid credentials', async () => {
@@ -73,5 +80,28 @@ describe('login', () => {
     // find the user name
     const text = await page.$eval('#login_err_msg', (el) => el.textContent);
     expect(text).toEqual('Can Not find User with this email');
+  });
+});
+
+describe('logout', () => {
+  it('should redirect the home page when logout', async () => {
+    await page.click('.login_btn');
+    await page.type('#login_email_input', 'test3565@test.com', { delay: 100 });
+    await page.type('#login_pass_input', 'test6635', { delay: 100 });
+
+    // submit the form
+    await page.click('.submit_login');
+    await page.waitForNavigation(); // wait until navigate to /user/profiles
+
+    // logout the user
+    await page.click('#logout_btn');
+
+    const homePageUrl = await page.url();
+    // assert redirect to home page
+    expect(homePageUrl).toMatch('http://localhost:3002');
+    // get cookies
+    const cookies = await page.cookies();
+    // assert cookies must be empty array after logout
+    expect(cookies).toEqual([]);
   });
 });
